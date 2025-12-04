@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Lock, User, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CustomCursor from '../../components/ui/CustomCursor';
+import { getApiUrl } from '../../src/config/api';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -17,7 +18,7 @@ const Login: React.FC = () => {
         setIsLoading(true);
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+            const res = await axios.post(getApiUrl('api/auth/login'), { username, password });
             localStorage.setItem('token', res.data.token);
             navigate('/admin/dashboard');
         } catch (err: any) {

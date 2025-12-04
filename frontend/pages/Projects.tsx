@@ -4,6 +4,7 @@ import { Project } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZoomIn, Layers } from 'lucide-react';
 import { ProjectLightbox } from '../components/ui/ProjectLightbox';
+import { getApiUrl } from '../src/config/api';
 
 
 
@@ -17,7 +18,7 @@ const Projects: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/projects');
+        const res = await axios.get(getApiUrl('api/projects'));
         setProjects(res.data);
       } catch (err) {
         console.error("Failed to fetch projects", err);

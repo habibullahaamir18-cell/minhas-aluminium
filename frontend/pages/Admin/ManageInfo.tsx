@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Save, Phone, Mail, MapPin, Globe, User, Briefcase, Award, Clock, Check, X as XIcon, Copy, Upload } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getApiUrl, getImageUrl } from '../../src/config/api';
 
 const ManageInfo: React.FC = () => {
     const [info, setInfo] = useState<any>({
@@ -19,7 +20,7 @@ const ManageInfo: React.FC = () => {
     useEffect(() => {
         const fetchInfo = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/info');
+                const res = await axios.get(getApiUrl('api/info'));
                 if (res.data && Object.keys(res.data).length > 0) {
                     let data = res.data;
 
@@ -60,7 +61,7 @@ const ManageInfo: React.FC = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/info', info, {
+            await axios.post(getApiUrl('api/info'), info, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setMessage('Saved successfully!');
@@ -407,10 +408,10 @@ const ManageInfo: React.FC = () => {
                                                 formData.append('image', e.target.files[0]);
                                                 try {
                                                     const token = localStorage.getItem('token');
-                                                    const res = await axios.post('http://localhost:5000/api/upload', formData, {
+                                                    const res = await axios.post(getApiUrl('api/upload'), formData, {
                                                         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
                                                     });
-                                                    setInfo({ ...info, about: { ...info.about, ceoImage: `http://localhost:5000${res.data.filePath}` } });
+                                                    setInfo({ ...info, about: { ...info.about, ceoImage: getImageUrl(res.data.filePath) } });
                                                 } catch (err) {
                                                     console.error('Upload failed', err);
                                                 }

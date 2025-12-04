@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
 import { getIcon } from '../components/ui/IconHelper';
 import { ServiceModal } from '../components/ui/ServiceModal';
+import { getApiUrl } from '../src/config/api';
 
 const Services: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -14,7 +15,7 @@ const Services: React.FC = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/services');
+        const res = await axios.get(getApiUrl('api/services'));
         setServices(res.data);
       } catch (err) {
         console.error("Failed to fetch services", err);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, X, Upload, Save } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { getApiUrl, getImageUrl } from '../../src/config/api';
 
 const ManageAbout: React.FC = () => {
     const [aboutData, setAboutData] = useState<any>({
@@ -24,7 +25,7 @@ const ManageAbout: React.FC = () => {
 
     const fetchAboutData = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/info');
+            const res = await axios.get(getApiUrl('api/info'));
             if (res.data?.about) {
                 setAboutData({
                     storyTitle: res.data.about.storyTitle || 'Our Story',
@@ -51,10 +52,10 @@ const ManageAbout: React.FC = () => {
         setUploading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post(getApiUrl('api/upload'), formData, {
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             });
-            const imageUrl = `http://localhost:5000${res.data.filePath}`;
+            const imageUrl = getImageUrl(res.data.filePath);
 
             if (field === 'storyImage') {
                 setAboutData({ ...aboutData, storyImage: imageUrl });
@@ -134,7 +135,7 @@ const ManageAbout: React.FC = () => {
         }
 
         try {
-            await axios.put('http://localhost:5000/api/info',
+            await axios.put(getApiUrl('api/info'),
                 { about: aboutData },
                 { headers: { 'Authorization': `Bearer ${token}` } }
             );

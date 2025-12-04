@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Plus, Trash2, Edit2, X, Upload, Search, Filter, Image as ImageIcon } from 'lucide-react';
 import { Project } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getApiUrl, getImageUrl } from '../../src/config/api';
 
 const ManageProjects: React.FC = () => {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -19,7 +20,7 @@ const ManageProjects: React.FC = () => {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/projects');
+            const res = await axios.get(getApiUrl('api/projects'));
             setProjects(res.data);
             setFilteredProjects(res.data);
         } catch (err) {
@@ -51,10 +52,10 @@ const ManageProjects: React.FC = () => {
         setUploading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post(getApiUrl('api/upload'), formData, {
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             });
-            setCurrentProject(prev => ({ ...prev, images: [...(prev.images || []), `http://localhost:5000${res.data.filePath}`] }));
+            setCurrentProject(prev => ({ ...prev, images: [...(prev.images || []), getImageUrl(res.data.filePath)] }));
         } catch (err) {
             console.error('Upload failed', err);
         } finally {
@@ -83,9 +84,9 @@ const ManageProjects: React.FC = () => {
 
         try {
             if (currentProject._id) {
-                await axios.put(`http://localhost:5000/api/projects/${currentProject._id}`, currentProject, { headers });
+                await axios.put(getApiUrl(`api/projects/${currentProject._id}`), currentProject, { headers });
             } else {
-                await axios.post('http://localhost:5000/api/projects', currentProject, { headers });
+                await axios.post(getApiUrl('api/projects'), currentProject, { headers });
             }
             setIsEditing(false);
             setCurrentProject({ title: '', category: '', location: '', description: '', images: [] });
@@ -103,7 +104,7 @@ const ManageProjects: React.FC = () => {
         if (!window.confirm('Are you sure you want to delete this project?')) return;
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:5000/api/projects/${id}`, {
+            await axios.delete(getApiUrl(`api/projects/${id}`), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchProjects();

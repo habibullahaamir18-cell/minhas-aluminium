@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { getApiUrl } from '../../src/config/api';
 
 const Dashboard: React.FC = () => {
     const [stats, setStats] = useState({
@@ -24,9 +25,9 @@ const Dashboard: React.FC = () => {
         const fetchData = async () => {
             try {
                 const [projectsRes, infoRes, clientsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/projects'),
-                    axios.get('http://localhost:5000/api/info'),
-                    axios.get('http://localhost:5000/api/clients')
+                    axios.get(getApiUrl('api/projects')),
+                    axios.get(getApiUrl('api/info')),
+                    axios.get(getApiUrl('api/clients'))
                 ]);
 
                 const infoStats = infoRes.data.stats || [];

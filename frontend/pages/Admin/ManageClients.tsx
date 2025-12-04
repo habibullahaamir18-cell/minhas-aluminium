@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, X, Upload, Search, Users, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getApiUrl, getImageUrl } from '../../src/config/api';
 
 interface Client {
     _id?: string;
@@ -24,7 +25,7 @@ const ManageClients: React.FC = () => {
 
     const fetchClients = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/clients');
+            const res = await axios.get(getApiUrl('api/clients'));
             setClients(res.data);
         } catch (err) {
             console.error("Failed to fetch clients", err);
@@ -44,10 +45,10 @@ const ManageClients: React.FC = () => {
         setUploading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post(getApiUrl('api/upload'), formData, {
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             });
-            setCurrentClient(prev => ({ ...prev, image: `http://localhost:5000${res.data.filePath}` }));
+            setCurrentClient(prev => ({ ...prev, image: getImageUrl(res.data.filePath) }));
         } catch (err) {
             console.error('Upload failed', err);
         } finally {
@@ -69,9 +70,9 @@ const ManageClients: React.FC = () => {
 
         try {
             if (currentClient._id) {
-                await axios.put(`http://localhost:5000/api/clients/${currentClient._id}`, currentClient, { headers });
+                await axios.put(getApiUrl(`api/clients/${currentClient._id}`), currentClient, { headers });
             } else {
-                await axios.post('http://localhost:5000/api/clients', currentClient, { headers });
+                await axios.post(getApiUrl('api/clients'), currentClient, { headers });
             }
             setIsEditing(false);
             setCurrentClient({ name: '', role: '', feedback: '', image: '', rating: 5 });
@@ -89,7 +90,7 @@ const ManageClients: React.FC = () => {
         if (!window.confirm('Are you sure you want to delete this client?')) return;
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:5000/api/clients/${id}`, {
+            await axios.delete(getApiUrl(`api/clients/${id}`), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchClients();

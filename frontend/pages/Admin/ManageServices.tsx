@@ -4,6 +4,7 @@ import { Plus, Trash2, Edit2, X, Upload } from 'lucide-react';
 import { Service } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getIcon } from '../../components/ui/IconHelper';
+import { getApiUrl, getImageUrl } from '../../src/config/api';
 
 const ManageServices: React.FC = () => {
     const [services, setServices] = useState<Service[]>([]);
@@ -19,7 +20,7 @@ const ManageServices: React.FC = () => {
 
     const fetchServices = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/services');
+            const res = await axios.get(getApiUrl('api/services'));
             setServices(res.data);
         } catch (err) {
             console.error("Failed to fetch services", err);
@@ -39,10 +40,10 @@ const ManageServices: React.FC = () => {
         setUploading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post(getApiUrl('api/upload'), formData, {
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             });
-            setCurrentService(prev => ({ ...prev, images: [...(prev.images || []), `http://localhost:5000${res.data.filePath}`] }));
+            setCurrentService(prev => ({ ...prev, images: [...(prev.images || []), getImageUrl(res.data.filePath)] }));
         } catch (err) {
             console.error('Upload failed', err);
         } finally {
@@ -118,9 +119,9 @@ const ManageServices: React.FC = () => {
 
         try {
             if (currentService._id) {
-                await axios.put(`http://localhost:5000/api/services/${currentService._id}`, currentService, { headers });
+                await axios.put(getApiUrl(`api/services/${currentService._id}`), currentService, { headers });
             } else {
-                await axios.post('http://localhost:5000/api/services', currentService, { headers });
+                await axios.post(getApiUrl('api/services'), currentService, { headers });
             }
 
             await fetchServices();
@@ -142,7 +143,7 @@ const ManageServices: React.FC = () => {
         if (!window.confirm('Are you sure you want to delete this service?')) return;
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:5000/api/services/${id}`, {
+            await axios.delete(getApiUrl(`api/services/${id}`), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchServices();

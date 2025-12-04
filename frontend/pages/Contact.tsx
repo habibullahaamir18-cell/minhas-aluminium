@@ -5,6 +5,7 @@ import { Reveal } from '../components/ui/Reveal';
 import ContactModal from '../components/ui/ContactModal';
 import { MAP_EMBED_SRC } from '../constants';
 import { TikTokIcon } from '../components/ui/IconHelper';
+import { getApiUrl } from '../src/config/api';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const Contact: React.FC = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/info');
+        const res = await axios.get(getApiUrl('api/info'));
         if (res.data) {
           setInfo(res.data);
         }

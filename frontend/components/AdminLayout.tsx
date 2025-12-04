@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CustomCursor from './ui/CustomCursor';
+import { getApiUrl } from '../src/config/api';
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -30,7 +31,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     useEffect(() => {
         const fetchInfo = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/info');
+                const res = await axios.get(getApiUrl('api/info'));
                 if (res.data?.about?.ceoImage) {
                     setCeoImage(res.data.about.ceoImage);
                 }

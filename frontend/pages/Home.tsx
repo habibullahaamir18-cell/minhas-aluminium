@@ -10,6 +10,7 @@ import { Counter } from '../components/ui/Counter';
 import { ServiceModal } from '../components/ui/ServiceModal';
 import { getIcon } from '../components/ui/IconHelper';
 import ContactModal from '../components/ui/ContactModal';
+import { getApiUrl } from '../src/config/api';
 
 const Home: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -30,10 +31,10 @@ const Home: React.FC = () => {
     const fetchData = async () => {
       try {
         const [projectsRes, infoRes, servicesRes, clientsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/projects'),
-          axios.get('http://localhost:5000/api/info'),
-          axios.get('http://localhost:5000/api/services'),
-          axios.get('http://localhost:5000/api/clients')
+          axios.get(getApiUrl('api/projects')),
+          axios.get(getApiUrl('api/info')),
+          axios.get(getApiUrl('api/services')),
+          axios.get(getApiUrl('api/clients'))
         ]);
         setProjects(projectsRes.data);
         setServices(servicesRes.data);

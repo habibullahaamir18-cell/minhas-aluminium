@@ -6,6 +6,7 @@ import { COMPANY_NAME } from '../constants';
 import CustomCursor from './ui/CustomCursor';
 import ContactModal from './ui/ContactModal';
 import { TikTokIcon, WhatsAppIcon } from './ui/IconHelper';
+import { getApiUrl } from '../src/config/api';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,7 +27,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/info');
+        const res = await axios.get(getApiUrl('api/info'));
         if (res.data) {
           setInfo(res.data);
         }
