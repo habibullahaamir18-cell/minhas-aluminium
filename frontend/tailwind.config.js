@@ -8,6 +8,7 @@ export default {
         extend: {
             colors: {
                 primary: '#0B5B7A', // Deep Teal
+                secondary: '#1a2332', // Dark Blue-Gray for backgrounds
                 accent: '#FFB84D',  // Warm Amber
                 dark: '#0F1724',    // Neutral Dark
                 glass: 'rgba(255, 255, 255, 0.08)',
