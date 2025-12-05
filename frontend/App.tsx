@@ -14,6 +14,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import ManageProjects from './pages/Admin/ManageProjects';
 import ManageServices from './pages/Admin/ManageServices';
 import ManageClients from './pages/Admin/ManageClients';
+import ManageAbout from './pages/Admin/ManageAbout';
 import ManageInfo from './pages/Admin/ManageInfo';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -49,6 +50,7 @@ const AnimatedRoutes = () => {
         <Route path="/admin/projects" element={<ProtectedRoute><AdminLayout><ManageProjects /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/services" element={<ProtectedRoute><AdminLayout><ManageServices /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/clients" element={<ProtectedRoute><AdminLayout><ManageClients /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/about" element={<ProtectedRoute><AdminLayout><ManageAbout /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/info" element={<ProtectedRoute><AdminLayout><ManageInfo /></AdminLayout></ProtectedRoute>} />
       </Routes>
     </AnimatePresence>

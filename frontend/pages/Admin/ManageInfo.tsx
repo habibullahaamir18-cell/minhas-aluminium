@@ -102,7 +102,6 @@ const ManageInfo: React.FC = () => {
         { id: 'stats', label: 'Statistics', icon: Award },
         { id: 'contact', label: 'Contact Details', icon: Phone },
         { id: 'hours', label: 'Working Hours', icon: Clock },
-        { id: 'about', label: 'About Us', icon: User },
     ];
 
     return (
@@ -354,74 +353,7 @@ const ManageInfo: React.FC = () => {
                         </motion.div>
                     )}
 
-                    {activeTab === 'about' && (
-                        <motion.div
-                            key="about"
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                        >
-                            <div className="space-y-2">
-                                <label className="flex items-center gap-2 text-sm font-medium text-gray-400">
-                                    <User size={16} /> CEO Name
-                                </label>
-                                <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
-                                    value={info.about?.ceoName || ''}
-                                    onChange={(e) => setInfo({ ...info, about: { ...info.about, ceoName: e.target.value } })}
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="flex items-center gap-2 text-sm font-medium text-gray-400">
-                                    <Briefcase size={16} /> Years of Experience
-                                </label>
-                                <input
-                                    type="number"
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
-                                    value={info.about?.yearsExperience || ''}
-                                    onChange={(e) => setInfo({ ...info, about: { ...info.about, yearsExperience: parseInt(e.target.value) } })}
-                                />
-                            </div>
-                            <div className="space-y-4 md:col-span-2">
-                                <label className="flex items-center gap-2 text-sm font-medium text-gray-400">
-                                    <User size={16} /> CEO Profile Picture
-                                </label>
-                                <div className="flex items-center gap-6">
-                                    <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-accent/20 bg-dark flex items-center justify-center">
-                                        {info.about?.ceoImage ? (
-                                            <img src={info.about.ceoImage} alt="CEO" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <User size={32} className="text-gray-600" />
-                                        )}
-                                    </div>
-                                    <label className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 cursor-pointer transition-colors flex items-center gap-2 text-sm font-medium text-white">
-                                        <Upload size={16} />
-                                        Upload Photo
-                                        <input
-                                            type="file"
-                                            className="hidden"
-                                            accept="image/*"
-                                            onChange={async (e) => {
-                                                if (!e.target.files?.[0]) return;
-                                                const formData = new FormData();
-                                                formData.append('image', e.target.files[0]);
-                                                try {
-                                                    const token = localStorage.getItem('token');
-                                                    const res = await axios.post(getApiUrl('api/upload'), formData, {
-                                                        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
-                                                    });
-                                                    setInfo({ ...info, about: { ...info.about, ceoImage: getImageUrl(res.data.filePath) } });
-                                                } catch (err) {
-                                                    console.error('Upload failed', err);
-                                                }
-                                            }}
-                                        />
-                                    </label>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
+
                 </AnimatePresence>
             </div>
         </div>

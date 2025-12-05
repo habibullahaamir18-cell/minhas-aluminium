@@ -52,6 +52,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         { name: 'Projects', path: '/admin/projects', icon: FolderPlus },
         { name: 'Services', path: '/admin/services', icon: Layers },
         { name: 'Clients', path: '/admin/clients', icon: Users },
+        { name: 'Manage About', path: '/admin/about', icon: User },
         { name: 'Business Info', path: '/admin/info', icon: Settings },
     ];
 
