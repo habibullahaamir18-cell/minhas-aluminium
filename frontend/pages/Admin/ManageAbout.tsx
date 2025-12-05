@@ -6,6 +6,9 @@ import { getApiUrl, getImageUrl } from '../../src/config/api';
 
 const ManageAbout: React.FC = () => {
     const [aboutData, setAboutData] = useState<any>({
+        ceoName: '',
+        ceoImage: '',
+        yearsExperience: 0,
         storyTitle: 'Our Story',
         storySubtitle: '',
         storyImage: '',
@@ -28,6 +31,9 @@ const ManageAbout: React.FC = () => {
             const res = await axios.get(getApiUrl('api/info'));
             if (res.data?.about) {
                 setAboutData({
+                    ceoName: res.data.about.ceoName || '',
+                    ceoImage: res.data.about.ceoImage || '',
+                    yearsExperience: res.data.about.yearsExperience || 0,
                     storyTitle: res.data.about.storyTitle || 'Our Story',
                     storySubtitle: res.data.about.storySubtitle || '',
                     storyImage: res.data.about.storyImage || '',
@@ -55,10 +61,12 @@ const ManageAbout: React.FC = () => {
             const res = await axios.post(getApiUrl('api/upload'), formData, {
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
             });
-            const imageUrl = getImageUrl(res.data.filePath);
+            const imageUrl = res.data.filePath; // Cloudinary returns full URL
 
             if (field === 'storyImage') {
                 setAboutData({ ...aboutData, storyImage: imageUrl });
+            } else if (field === 'ceoImage') {
+                setAboutData({ ...aboutData, ceoImage: imageUrl });
             } else if (field === 'shopImages') {
                 setAboutData({ ...aboutData, shopImages: [...aboutData.shopImages, imageUrl] });
             }
@@ -74,6 +82,8 @@ const ManageAbout: React.FC = () => {
 
         if (field === 'storyImage') {
             setAboutData({ ...aboutData, storyImage: imageUrlInput.trim() });
+        } else if (field === 'ceoImage') {
+            setAboutData({ ...aboutData, ceoImage: imageUrlInput.trim() });
         } else if (field === 'shopImages') {
             setAboutData({ ...aboutData, shopImages: [...aboutData.shopImages, imageUrlInput.trim()] });
         }
@@ -172,6 +182,64 @@ const ManageAbout: React.FC = () => {
                     {message.text}
                 </motion.div>
             )}
+
+            {/* CEO Information Section */}
+            <div className="bg-secondary rounded-xl p-6 border border-white/5">
+                <h2 className="text-2xl font-bold text-white mb-6">CEO Information</h2>
+
+                <div className="space-y-4">
+                    <div>
+                        <label className="text-sm font-medium text-gray-400 mb-2 block">CEO Name</label>
+                        <input
+                            className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                            value={aboutData.ceoName}
+                            onChange={e => setAboutData({ ...aboutData, ceoName: e.target.value })}
+                            placeholder="e.g., Ahmed Minhas"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="text-sm font-medium text-gray-400 mb-2 block">Years of Experience</label>
+                        <input
+                            type="number"
+                            className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                            value={aboutData.yearsExperience}
+                            onChange={e => setAboutData({ ...aboutData, yearsExperience: parseInt(e.target.value) || 0 })}
+                            placeholder="e.g., 16"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="text-sm font-medium text-gray-400 mb-2 block">CEO Photo</label>
+                        {aboutData.ceoImage && (
+                            <div className="mb-4">
+                                <img src={aboutData.ceoImage} alt="CEO" className="w-32 h-32 object-cover rounded-full border-2 border-accent" />
+                            </div>
+                        )}
+                        <div className="flex gap-2">
+                            <label className="flex-1 cursor-pointer">
+                                <div className="bg-dark border border-gray-700 rounded-lg px-4 py-3 text-center hover:border-accent transition-colors">
+                                    {uploading ? 'Uploading...' : 'Upload CEO Photo'}
+                                </div>
+                                <input type="file" className="hidden" onChange={(e) => handleImageUpload(e, 'ceoImage')} accept="image/*" disabled={uploading} />
+                            </label>
+                            <input
+                                type="text"
+                                className="flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                placeholder="Or paste image URL..."
+                                value={imageUrlInput}
+                                onChange={e => setImageUrlInput(e.target.value)}
+                            />
+                            <button
+                                onClick={() => addImageFromUrl('ceoImage')}
+                                className="bg-white/10 text-white px-4 rounded-lg hover:bg-white/20"
+                            >
+                                Add URL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Story Section */}
             <div className="bg-secondary rounded-xl p-6 border border-white/5">

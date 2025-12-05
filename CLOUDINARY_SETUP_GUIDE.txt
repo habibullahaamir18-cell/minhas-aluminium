@@ -1,0 +1,235 @@
+# Cloudinary Setup Guide
+## Complete Guide to Setting Up Cloudinary for Image Uploads
+
+---
+
+## What is Cloudinary?
+
+Cloudinary is a cloud-based image and video management service. It provides:
+- ✅ **Persistent Storage** - Images are never deleted (unlike Railway's ephemeral filesystem)
+- ✅ **Free Tier** - 25GB storage, 25GB bandwidth per month
+- ✅ **Automatic Optimization** - Images are automatically optimized for web
+- ✅ **CDN Delivery** - Fast image loading worldwide
+
+---
+
+## STEP 1: Create Cloudinary Account
+
+### 1.1 Sign Up
+1. Go to: https://cloudinary.com
+2. Click **"Sign Up Free"**
+3. Fill in your details:
+   - Email address
+   - Password
+   - Choose a cloud name (e.g., `minhas-aluminium`)
+4. Click **"Create Account"**
+5. Verify your email address
+
+### 1.2 Access Dashboard
+1. After email verification, log in to Cloudinary
+2. You'll be taken to the **Dashboard**
+
+---
+
+## STEP 2: Get Your Cloudinary Credentials
+
+### 2.1 Find Your Credentials
+1. On the Cloudinary Dashboard, you'll see:
+   - **Cloud Name**
+   - **API Key**
+   - **API Secret** (click "Show" to reveal)
+
+2. **Copy these three values** - you'll need them for both local development and Railway deployment
+
+Example:
+```
+Cloud Name: minhas-aluminium
+API Key: 123456789012345
+API Secret: abcdefghijklmnopqrstuvwxyz123456
+```
+
+---
+
+## STEP 3: Add Credentials to Local Backend
+
+### 3.1 Update Your Local .env File
+1. Open: `d:\Projects\Upgraded Minhas Website\backend\.env`
+2. Add these lines (replace with your actual credentials):
+
+```
+CLOUDINARY_CLOUD_NAME=minhas-aluminium
+CLOUDINARY_API_KEY=123456789012345
+CLOUDINARY_API_SECRET=abcdefghijklmnopqrstuvwxyz123456
+```
+
+3. Save the file
+
+### 3.2 Verify Local Setup
+1. Open terminal in backend folder
+2. Run: `npm start`
+3. Check console for any Cloudinary errors
+4. If no errors, Cloudinary is configured correctly!
+
+---
+
+## STEP 4: Add Credentials to Railway (CRITICAL!)
+
+### 4.1 Access Railway Variables
+1. Go to: https://railway.app
+2. Sign in to your account
+3. Click on your backend project: **"minhas-aluminium-backend-production"**
+4. Click on the **"Variables"** tab
+
+### 4.2 Add Cloudinary Variables
+Add these THREE new environment variables:
+
+**Variable 1:**
+- Name: `CLOUDINARY_CLOUD_NAME`
+- Value: [Your cloud name from Step 2]
+
+**Variable 2:**
+- Name: `CLOUDINARY_API_KEY`
+- Value: [Your API key from Step 2]
+
+**Variable 3:**
+- Name: `CLOUDINARY_API_SECRET`
+- Value: [Your API secret from Step 2]
+
+### 4.3 Redeploy
+1. After adding all three variables, Railway will automatically redeploy
+2. Wait 1-2 minutes for deployment to complete
+3. Check deployment logs for "✅ MongoDB Connected Successfully"
+
+---
+
+## STEP 5: Test Image Upload
+
+### 5.1 Test on Local Development
+1. Run backend: `npm start` (in backend folder)
+2. Run frontend: `npm run dev` (in frontend folder)
+3. Go to: `http://localhost:3000/admin/login`
+4. Login with your credentials
+5. Go to **"Manage About"**
+6. Try uploading an image (CEO photo, story image, or shop image)
+7. If successful, you'll see the image appear immediately
+
+### 5.2 Test on Deployed Site
+1. Go to: `https://minhas-aluminium-nqd6.vercel.app/admin/login`
+2. Login with your credentials
+3. Go to **"Manage About"**
+4. Try uploading an image
+5. Check if the image appears on the public About page
+
+---
+
+## STEP 6: Verify Images are on Cloudinary
+
+### 6.1 Check Cloudinary Media Library
+1. Go to Cloudinary Dashboard
+2. Click **"Media Library"** in the left sidebar
+3. You should see a folder called **"minhas-aluminium"**
+4. Click on it to see all uploaded images
+5. All your uploaded images will be stored here permanently
+
+---
+
+## Troubleshooting
+
+### Issue: "Upload failed" error
+**Solutions:**
+1. Check Railway environment variables are set correctly
+2. Verify Cloudinary credentials are correct
+3. Check Railway deployment logs for errors
+4. Ensure you're logged in as admin (token is valid)
+
+### Issue: Images not appearing after upload
+**Solutions:**
+1. Check browser console for errors
+2. Verify the image URL returned from Cloudinary
+3. Check if Cloudinary account is active
+4. Try uploading a smaller image (< 5MB)
+
+### Issue: "Cloudinary upload error" in logs
+**Solutions:**
+1. Verify API Secret is correct (no extra spaces)
+2. Check Cloudinary account status (not suspended)
+3. Ensure file size is under 5MB limit
+
+---
+
+## Image Upload Limits
+
+### Free Tier Limits:
+- **Storage**: 25GB
+- **Bandwidth**: 25GB/month
+- **Transformations**: 25,000/month
+- **File Size**: 10MB per image (we set 5MB limit in code)
+
+### Recommended Image Sizes:
+- **CEO Photo**: 500x500px (square)
+- **Story Image**: 1200x800px (landscape)
+- **Shop Images**: 800x600px (landscape)
+
+---
+
+## How Image Upload Works
+
+### Upload Flow:
+1. User selects image in admin panel
+2. Frontend sends image to backend `/api/upload`
+3. Backend uploads to Cloudinary
+4. Cloudinary returns permanent URL
+5. Frontend saves URL to MongoDB
+6. Image is displayed using Cloudinary URL
+
+### Image URL Format:
+```
+https://res.cloudinary.com/minhas-aluminium/image/upload/v1234567890/minhas-aluminium/filename.jpg
+```
+
+All images are stored in the `minhas-aluminium` folder on Cloudinary.
+
+---
+
+## Important Notes
+
+✅ **Images are permanent** - Once uploaded to Cloudinary, they stay there forever (unless you manually delete them)
+
+✅ **No Railway storage needed** - Images are NOT stored on Railway, only on Cloudinary
+
+✅ **Fast loading** - Cloudinary uses CDN for fast image delivery worldwide
+
+⚠️ **Keep credentials secret** - Never commit Cloudinary credentials to GitHub
+
+⚠️ **Monitor usage** - Check Cloudinary dashboard monthly to ensure you're within free tier limits
+
+---
+
+## Alternative: Using Direct Image URLs
+
+If you don't want to upload images, you can still use direct URLs:
+
+1. Upload image to any image hosting service (Imgur, Unsplash, etc.)
+2. Copy the direct image URL
+3. Paste it in the "Or paste image URL..." field
+4. Click "Add URL"
+
+This works for all image fields (CEO photo, story image, shop images).
+
+---
+
+## Summary Checklist
+
+Before deploying, ensure:
+- [ ] Cloudinary account created
+- [ ] Cloud name, API key, and API secret copied
+- [ ] Local `.env` file updated with Cloudinary credentials
+- [ ] Railway environment variables added (all 3)
+- [ ] Railway redeployed successfully
+- [ ] Test image upload works locally
+- [ ] Test image upload works on deployed site
+- [ ] Images appear in Cloudinary Media Library
+
+---
+
+Last Updated: December 5, 2024
