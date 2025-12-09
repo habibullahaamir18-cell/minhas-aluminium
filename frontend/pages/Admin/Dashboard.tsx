@@ -61,12 +61,12 @@ const Dashboard: React.FC = () => {
     return (
         <div className="space-y-8">
             {/* Welcome Section */}
-            <div className="flex justify-between items-end">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-display font-bold text-white mb-2">Dashboard Overview</h1>
                     <p className="text-gray-400">Welcome back, Admin. Here's what's happening today.</p>
                 </div>
-                <div className="text-sm text-gray-500 bg-secondary px-4 py-2 rounded-full border border-white/5">
+                <div className="text-sm text-gray-500 bg-secondary px-4 py-2 rounded-full border border-white/5 w-fit">
                     {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                 </div>
             </div>
@@ -159,7 +159,7 @@ const Dashboard: React.FC = () => {
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">System Status</h3>
                     <p className="text-gray-400 mb-4">All systems are running smoothly.</p>
-                    <div className="flex gap-4 text-sm">
+                    <div className="flex flex-wrap justify-center gap-4 text-sm">
                         <div className="flex items-center gap-2 text-green-400 bg-green-500/10 px-3 py-1 rounded-full">
                             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Database Connected
                         </div>

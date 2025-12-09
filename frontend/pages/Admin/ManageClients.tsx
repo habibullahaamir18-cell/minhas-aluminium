@@ -196,7 +196,7 @@ const ManageClients: React.FC = () => {
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 50 }}
-                            className="bg-secondary w-full max-w-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                            className="bg-secondary w-[95%] md:w-full max-w-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
                         >
                             <div className="p-6 border-b border-white/5 flex justify-between items-center bg-dark/50">
                                 <h2 className="text-2xl font-bold text-white">{currentClient._id ? 'Edit Client' : 'New Client'}</h2>

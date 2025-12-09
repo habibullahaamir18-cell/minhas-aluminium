@@ -238,7 +238,7 @@ const ManageInfo: React.FC = () => {
                                                 onChange={(e) => updateStat(i, 'label', e.target.value)}
                                             />
                                         </div>
-                                        <div className="flex gap-4">
+                                        <div className="flex flex-col sm:flex-row gap-4">
                                             <div className="flex-1">
                                                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Value</label>
                                                 <input
@@ -248,7 +248,7 @@ const ManageInfo: React.FC = () => {
                                                     onChange={(e) => updateStat(i, 'value', parseInt(e.target.value))}
                                                 />
                                             </div>
-                                            <div className="w-24">
+                                            <div className="w-full sm:w-24">
                                                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Suffix</label>
                                                 <input
                                                     className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
@@ -370,15 +370,28 @@ const ManageInfo: React.FC = () => {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-4"
                         >
-                            <div className="grid grid-cols-12 gap-4 text-sm font-bold text-gray-500 uppercase tracking-wider mb-2 px-4">
+                            <div className="hidden sm:grid grid-cols-12 gap-4 text-sm font-bold text-gray-500 uppercase tracking-wider mb-2 px-4">
                                 <div className="col-span-3">Day</div>
                                 <div className="col-span-3 text-center">Status</div>
                                 <div className="col-span-6">Hours</div>
                             </div>
                             {info.workingHours?.map((dayInfo: any, i: number) => (
-                                <div key={i} className="grid grid-cols-12 gap-4 items-center bg-dark p-4 rounded-lg border border-white/5 hover:border-accent/30 transition-colors">
-                                    <div className="col-span-3 font-medium text-white">{dayInfo.day}</div>
-                                    <div className="col-span-3 flex justify-center">
+                                <div key={i} className="flex flex-col sm:grid sm:grid-cols-12 gap-4 items-center bg-dark p-4 rounded-lg border border-white/5 hover:border-accent/30 transition-colors">
+                                    <div className="w-full sm:w-auto sm:col-span-3 flex justify-between sm:block">
+                                        <span className="font-medium text-white">{dayInfo.day}</span>
+                                        <div className="sm:hidden">
+                                            <button
+                                                onClick={() => updateWorkingHour(i, 'isOpen', !dayInfo.isOpen)}
+                                                className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${dayInfo.isOpen
+                                                    ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                                                    : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
+                                                    }`}
+                                            >
+                                                {dayInfo.isOpen ? 'Open' : 'Closed'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="hidden sm:flex sm:col-span-3 justify-center">
                                         <button
                                             onClick={() => updateWorkingHour(i, 'isOpen', !dayInfo.isOpen)}
                                             className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${dayInfo.isOpen
@@ -389,7 +402,7 @@ const ManageInfo: React.FC = () => {
                                             {dayInfo.isOpen ? 'Open' : 'Closed'}
                                         </button>
                                     </div>
-                                    <div className="col-span-6">
+                                    <div className="w-full sm:col-span-6">
                                         <div className="relative flex items-center gap-2">
                                             <input
                                                 className={`w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none transition-opacity ${!dayInfo.isOpen && 'opacity-50 cursor-not-allowed'}`}
@@ -519,8 +532,8 @@ const ManageInfo: React.FC = () => {
                                 </div>
                                 <div className="space-y-4">
                                     {info.about?.values?.map((val: any, i: number) => (
-                                        <div key={i} className="flex gap-4 items-center bg-secondary/50 p-3 rounded-lg">
-                                            <div className="w-1/3">
+                                        <div key={i} className="flex flex-col sm:flex-row gap-4 items-start bg-secondary/50 p-3 rounded-lg">
+                                            <div className="w-full sm:w-1/3">
                                                 <label className="block text-xs text-gray-500 mb-1">Icon (lucide)</label>
                                                 <input
                                                     className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
@@ -529,7 +542,7 @@ const ManageInfo: React.FC = () => {
                                                     placeholder="award, users..."
                                                 />
                                             </div>
-                                            <div className="flex-1">
+                                            <div className="w-full sm:flex-1">
                                                 <label className="block text-xs text-gray-500 mb-1">Label</label>
                                                 <input
                                                     className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
@@ -537,7 +550,7 @@ const ManageInfo: React.FC = () => {
                                                     onChange={(e) => updateAboutArray('values', i, 'label', e.target.value)}
                                                 />
                                             </div>
-                                            <button onClick={() => removeFromAboutArray('values', i)} className="text-red-400 hover:text-red-300 p-2"><XIcon size={16} /></button>
+                                            <button onClick={() => removeFromAboutArray('values', i)} className="w-full sm:w-auto flex justify-center text-red-400 hover:text-red-300 p-2"><XIcon size={16} /></button>
                                         </div>
                                     ))}
                                 </div>
@@ -553,8 +566,8 @@ const ManageInfo: React.FC = () => {
                                     {info.about?.timeline?.map((item: any, i: number) => (
                                         <div key={i} className="bg-secondary/50 p-4 rounded-lg space-y-3 relative group">
                                             <button onClick={() => removeFromAboutArray('timeline', i)} className="absolute top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"><XIcon size={16} /></button>
-                                            <div className="grid grid-cols-4 gap-4">
-                                                <div className="col-span-1">
+                                            <div className="flex flex-col sm:grid sm:grid-cols-4 gap-4 mt-6 sm:mt-0">
+                                                <div className="w-full sm:col-span-1">
                                                     <label className="block text-xs text-gray-500 mb-1">Year</label>
                                                     <input
                                                         className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
@@ -562,7 +575,7 @@ const ManageInfo: React.FC = () => {
                                                         onChange={(e) => updateAboutArray('timeline', i, 'year', e.target.value)}
                                                     />
                                                 </div>
-                                                <div className="col-span-3">
+                                                <div className="w-full sm:col-span-3">
                                                     <label className="block text-xs text-gray-500 mb-1">Title</label>
                                                     <input
                                                         className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"

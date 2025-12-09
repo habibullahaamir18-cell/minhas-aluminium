@@ -28,7 +28,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-dark relative overflow-hidden selection:bg-accent selection:text-dark">
+        <div className="min-h-screen flex items-center justify-center bg-dark relative overflow-hidden selection:bg-accent selection:text-dark px-4">
             <CustomCursor />
 
             {/* Animated Background */}

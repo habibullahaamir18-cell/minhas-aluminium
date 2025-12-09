@@ -160,7 +160,7 @@ const ManageAbout: React.FC = () => {
 
     return (
         <div className="space-y-8">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-display font-bold text-white mb-2">Manage About Page</h1>
                     <p className="text-gray-400">Update your company story, timeline, and values.</p>
@@ -216,7 +216,7 @@ const ManageAbout: React.FC = () => {
                                 <img src={aboutData.ceoImage} alt="CEO" className="w-32 h-32 object-cover rounded-full border-2 border-accent" />
                             </div>
                         )}
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                             <label className="flex-1 cursor-pointer">
                                 <div className="bg-dark border border-gray-700 rounded-lg px-4 py-3 text-center hover:border-accent transition-colors">
                                     {uploading ? 'Uploading...' : 'Upload CEO Photo'}
@@ -232,7 +232,7 @@ const ManageAbout: React.FC = () => {
                             />
                             <button
                                 onClick={() => addImageFromUrl('ceoImage')}
-                                className="bg-white/10 text-white px-4 rounded-lg hover:bg-white/20"
+                                className="w-full sm:w-auto bg-white/10 text-white px-4 py-3 rounded-lg hover:bg-white/20"
                             >
                                 Add URL
                             </button>
@@ -273,7 +273,7 @@ const ManageAbout: React.FC = () => {
                                 <img src={aboutData.storyImage} alt="Story" className="w-full h-48 object-cover rounded-lg" />
                             </div>
                         )}
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                             <label className="flex-1 cursor-pointer">
                                 <div className="bg-dark border border-gray-700 rounded-lg px-4 py-3 text-center hover:border-accent transition-colors">
                                     {uploading ? 'Uploading...' : 'Upload Image'}
@@ -289,7 +289,7 @@ const ManageAbout: React.FC = () => {
                             />
                             <button
                                 onClick={() => addImageFromUrl('storyImage')}
-                                className="bg-white/10 text-white px-4 rounded-lg hover:bg-white/20"
+                                className="w-full sm:w-auto bg-white/10 text-white px-4 py-3 rounded-lg hover:bg-white/20"
                             >
                                 Add URL
                             </button>
@@ -332,22 +332,22 @@ const ManageAbout: React.FC = () => {
 
                 <div className="space-y-4">
                     {aboutData.values.map((value: any, index: number) => (
-                        <div key={index} className="flex gap-4 items-start bg-dark/50 p-4 rounded-lg">
+                        <div key={index} className="flex flex-col md:flex-row gap-4 items-start bg-dark/50 p-4 rounded-lg">
                             <input
-                                className="flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                className="w-full md:flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
                                 value={value.icon}
                                 onChange={e => updateValue(index, 'icon', e.target.value)}
                                 placeholder="Icon name (e.g., award, users)"
                             />
                             <input
-                                className="flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                className="w-full md:flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
                                 value={value.label}
                                 onChange={e => updateValue(index, 'label', e.target.value)}
                                 placeholder="Label (e.g., Quality Certified)"
                             />
                             <button
                                 onClick={() => removeValue(index)}
-                                className="p-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                                className="w-full md:w-auto p-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600 hover:text-white transition-colors flex justify-center"
                             >
                                 <Trash2 size={16} />
                             </button>
@@ -371,22 +371,22 @@ const ManageAbout: React.FC = () => {
                 <div className="space-y-4">
                     {aboutData.timeline.map((item: any, index: number) => (
                         <div key={index} className="bg-dark/50 p-4 rounded-lg space-y-3">
-                            <div className="flex gap-4">
+                            <div className="flex flex-col md:flex-row gap-4">
                                 <input
-                                    className="w-32 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                    className="w-full md:w-32 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
                                     value={item.year}
                                     onChange={e => updateTimelineItem(index, 'year', e.target.value)}
                                     placeholder="Year"
                                 />
                                 <input
-                                    className="flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                    className="w-full md:flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
                                     value={item.title}
                                     onChange={e => updateTimelineItem(index, 'title', e.target.value)}
                                     placeholder="Title"
                                 />
                                 <button
                                     onClick={() => removeTimelineItem(index)}
-                                    className="p-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600 hover:text-white transition-colors"
+                                    className="w-full md:w-auto p-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600 hover:text-white transition-colors flex justify-center"
                                 >
                                     <Trash2 size={16} />
                                 </button>
@@ -431,17 +431,17 @@ const ManageAbout: React.FC = () => {
                     </label>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                     <input
                         type="text"
-                        className="flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                        className="w-full sm:flex-1 bg-dark border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
                         placeholder="Or paste image URL..."
                         value={imageUrlInput}
                         onChange={e => setImageUrlInput(e.target.value)}
                     />
                     <button
                         onClick={() => addImageFromUrl('shopImages')}
-                        className="bg-white/10 text-white px-4 rounded-lg hover:bg-white/20"
+                        className="w-full sm:w-auto bg-white/10 text-white px-4 py-2 rounded-lg hover:bg-white/20"
                     >
                         Add URL
                     </button>
