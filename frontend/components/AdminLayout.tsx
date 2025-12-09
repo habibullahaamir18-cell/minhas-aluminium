@@ -77,7 +77,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
     const sidebarVariants = {
         open: { width: 280, x: 0 },
-        closed: { width: isMobile ? 0 : 80, x: isMobile ? -280 : 0 }
+        closed: { width: 0, x: isMobile ? -280 : 0 }
     };
 
     return (
@@ -147,18 +147,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             </motion.aside>
 
             {/* Main Content Area */}
-            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${!isMobile && isSidebarOpen ? 'ml-[280px]' : !isMobile ? 'ml-[80px]' : 'ml-0'}`}>
+            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${!isMobile && isSidebarOpen ? 'ml-[280px]' : 'ml-0'}`}>
                 {/* Top Header */}
                 <header className="h-20 bg-dark/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-10 px-4 md:px-8 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        {isMobile && (
-                            <button
-                                onClick={() => setIsSidebarOpen(true)}
-                                className="text-gray-400 hover:text-white"
-                            >
-                                <Menu size={24} />
-                            </button>
-                        )}
+                        <button
+                            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                            className="text-gray-400 hover:text-white"
+                        >
+                            <Menu size={24} />
+                        </button>
                         <div className="flex items-center gap-2 text-sm text-gray-400">
                             <span className="hidden md:inline">Admin</span>
                             <ChevronRight size={14} className="hidden md:block" />
