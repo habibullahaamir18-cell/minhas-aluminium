@@ -23,10 +23,24 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
     const [ceoImage, setCeoImage] = useState<string | null>(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+            if (mobile) setIsSidebarOpen(false);
+            else setIsSidebarOpen(true);
+        };
+
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchInfo = async () => {
@@ -42,6 +56,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         fetchInfo();
     }, []);
 
+    // Close sidebar on route change on mobile
+    useEffect(() => {
+        if (isMobile) setIsSidebarOpen(false);
+    }, [location, isMobile]);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/admin/login');
@@ -56,24 +75,35 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         { name: 'Business Info', path: '/admin/info', icon: Settings },
     ];
 
+    const sidebarVariants = {
+        open: { width: 280, x: 0 },
+        closed: { width: isMobile ? 0 : 80, x: isMobile ? -280 : 0 }
+    };
+
     return (
         <div className="min-h-screen bg-dark text-gray-100 flex font-sans selection:bg-accent selection:text-dark">
             <CustomCursor />
+
+            {/* Mobile Backdrop */}
+            {isMobile && isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-20 backdrop-blur-sm"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
             {/* Sidebar */}
             <motion.aside
-                initial={{ width: 280 }}
-                animate={{ width: isSidebarOpen ? 280 : 80 }}
-                className="bg-secondary border-r border-white/5 flex flex-col fixed h-full z-20 transition-all duration-300"
+                initial={isMobile ? "closed" : "open"}
+                animate={isSidebarOpen ? "open" : "closed"}
+                variants={sidebarVariants}
+                className={`bg-secondary border-r border-white/5 flex flex-col fixed h-full z-30 transition-all duration-300 overflow-hidden ${isMobile ? 'shadow-2xl' : ''}`}
             >
                 {/* Logo Area */}
-                <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
-                    {isSidebarOpen ? (
-                        <span className="text-xl font-display font-bold text-white tracking-wider">
-                            Minhas<span className="text-accent">.</span>
-                        </span>
-                    ) : (
-                        <span className="text-xl font-display font-bold text-accent mx-auto">M.</span>
-                    )}
+                <div className="h-20 flex items-center justify-between px-6 border-b border-white/5 min-w-[280px]">
+                    <span className="text-xl font-display font-bold text-white tracking-wider">
+                        Minhas<span className="text-accent">.</span>
+                    </span>
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className="text-gray-400 hover:text-white transition-colors"
@@ -83,7 +113,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 </div>
 
                 {/* Nav Items */}
-                <nav className="flex-1 py-8 px-4 space-y-2">
+                <nav className="flex-1 py-8 px-4 space-y-2 min-w-[280px]">
                     {navItems.map((item) => {
                         const isActive = location.pathname === item.path;
                         return (
@@ -96,47 +126,46 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                                     }`}
                             >
                                 <item.icon size={20} className={isActive ? 'text-dark' : 'text-gray-400 group-hover:text-accent transition-colors'} />
-                                {isSidebarOpen && (
-                                    <motion.span
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        className="whitespace-nowrap"
-                                    >
-                                        {item.name}
-                                    </motion.span>
-                                )}
-                                {!isSidebarOpen && isActive && (
-                                    <div className="absolute left-full ml-4 bg-accent text-dark px-2 py-1 rounded text-xs font-bold whitespace-nowrap shadow-lg">
-                                        {item.name}
-                                    </div>
-                                )}
+                                <span className="whitespace-nowrap">
+                                    {item.name}
+                                </span>
                             </Link>
                         );
                     })}
                 </nav>
 
                 {/* User Profile / Logout */}
-                <div className="p-4 border-t border-white/5">
+                <div className="p-4 border-t border-white/5 min-w-[280px]">
                     <button
                         onClick={handleLogout}
-                        className={`flex items-center gap-4 w-full px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 ${!isSidebarOpen && 'justify-center'}`}
+                        className="flex items-center gap-4 w-full px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200"
                     >
                         <LogOut size={20} />
-                        {isSidebarOpen && <span>Logout</span>}
+                        <span>Logout</span>
                     </button>
                 </div>
             </motion.aside>
 
             {/* Main Content Area */}
-            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${isSidebarOpen ? 'ml-[280px]' : 'ml-[80px]'}`}>
+            <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${!isMobile && isSidebarOpen ? 'ml-[280px]' : !isMobile ? 'ml-[80px]' : 'ml-0'}`}>
                 {/* Top Header */}
-                <header className="h-20 bg-dark/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-10 px-8 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <span>Admin</span>
-                        <ChevronRight size={14} />
-                        <span className="text-white font-medium">
-                            {navItems.find(i => i.path === location.pathname)?.name || 'Dashboard'}
-                        </span>
+                <header className="h-20 bg-dark/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-10 px-4 md:px-8 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        {isMobile && (
+                            <button
+                                onClick={() => setIsSidebarOpen(true)}
+                                className="text-gray-400 hover:text-white"
+                            >
+                                <Menu size={24} />
+                            </button>
+                        )}
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                            <span className="hidden md:inline">Admin</span>
+                            <ChevronRight size={14} className="hidden md:block" />
+                            <span className="text-white font-medium">
+                                {navItems.find(i => i.path === location.pathname)?.name || 'Dashboard'}
+                            </span>
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -151,7 +180,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 p-8 overflow-x-hidden">
+                <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={location.pathname}
