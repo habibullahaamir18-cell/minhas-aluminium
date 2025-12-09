@@ -276,7 +276,7 @@ const ManageInfo: React.FC = () => {
                                     <Phone size={16} /> Phone Number
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.phone || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, phone: e.target.value } })}
                                     placeholder="+92 300 123 4567"
@@ -287,7 +287,7 @@ const ManageInfo: React.FC = () => {
                                     <Globe size={16} /> WhatsApp
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.whatsapp || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, whatsapp: e.target.value } })}
                                     placeholder="https://wa.me/..."
@@ -298,7 +298,7 @@ const ManageInfo: React.FC = () => {
                                     <Mail size={16} /> Email Address
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.email || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, email: e.target.value } })}
                                     placeholder="info@minhascorp.pk"
@@ -309,7 +309,7 @@ const ManageInfo: React.FC = () => {
                                     <MapPin size={16} /> Physical Address
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.address || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, address: e.target.value } })}
                                     placeholder="Office #12, Industrial Estate, Rawalpindi"
@@ -320,7 +320,7 @@ const ManageInfo: React.FC = () => {
                                     <Globe size={16} /> Facebook Link
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.socials?.facebook || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, socials: { ...info.contact.socials, facebook: e.target.value } } })}
                                     placeholder="https://facebook.com/..."
@@ -331,7 +331,7 @@ const ManageInfo: React.FC = () => {
                                     <Globe size={16} /> Instagram Link
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.socials?.instagram || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, socials: { ...info.contact.socials, instagram: e.target.value } } })}
                                     placeholder="https://instagram.com/..."
@@ -342,7 +342,7 @@ const ManageInfo: React.FC = () => {
                                     <Globe size={16} /> TikTok Link
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.socials?.tiktok || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, socials: { ...info.contact.socials, tiktok: e.target.value } } })}
                                     placeholder="https://tiktok.com/..."
@@ -353,7 +353,7 @@ const ManageInfo: React.FC = () => {
                                     <MapPin size={16} /> Map Location Link
                                 </label>
                                 <input
-                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none"
+                                    className="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none"
                                     value={info.contact?.socials?.mapLocation || ''}
                                     onChange={(e) => setInfo({ ...info, contact: { ...info.contact, socials: { ...info.contact.socials, mapLocation: e.target.value } } })}
                                     placeholder="https://maps.google.com/..."
@@ -370,31 +370,14 @@ const ManageInfo: React.FC = () => {
                             exit={{ opacity: 0, x: -20 }}
                             className="space-y-4"
                         >
-                            <div className="hidden sm:grid grid-cols-12 gap-4 text-sm font-bold text-gray-500 uppercase tracking-wider mb-2 px-4">
-                                <div className="col-span-3">Day</div>
-                                <div className="col-span-3 text-center">Status</div>
-                                <div className="col-span-6">Hours</div>
-                            </div>
                             {info.workingHours?.map((dayInfo: any, i: number) => (
-                                <div key={i} className="flex flex-col sm:grid sm:grid-cols-12 gap-4 items-center bg-dark p-4 rounded-lg border border-white/5 hover:border-accent/30 transition-colors">
-                                    <div className="w-full sm:w-auto sm:col-span-3 flex justify-between sm:block">
-                                        <span className="font-medium text-white">{dayInfo.day}</span>
-                                        <div className="sm:hidden">
-                                            <button
-                                                onClick={() => updateWorkingHour(i, 'isOpen', !dayInfo.isOpen)}
-                                                className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${dayInfo.isOpen
-                                                    ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-                                                    : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-                                                    }`}
-                                            >
-                                                {dayInfo.isOpen ? 'Open' : 'Closed'}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="hidden sm:flex sm:col-span-3 justify-center">
+                                <div key={i} className="bg-dark p-4 sm:p-5 rounded-xl border border-white/5 hover:border-accent/30 transition-colors space-y-3">
+                                    {/* Mobile & Desktop: Day and Status Row */}
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-bold text-white text-base sm:text-lg">{dayInfo.day}</span>
                                         <button
                                             onClick={() => updateWorkingHour(i, 'isOpen', !dayInfo.isOpen)}
-                                            className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${dayInfo.isOpen
+                                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all min-w-[80px] ${dayInfo.isOpen
                                                 ? 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
                                                 : 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
                                                 }`}
@@ -402,23 +385,23 @@ const ManageInfo: React.FC = () => {
                                             {dayInfo.isOpen ? 'Open' : 'Closed'}
                                         </button>
                                     </div>
-                                    <div className="w-full sm:col-span-6">
-                                        <div className="relative flex items-center gap-2">
-                                            <input
-                                                className={`w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none transition-opacity ${!dayInfo.isOpen && 'opacity-50 cursor-not-allowed'}`}
-                                                value={dayInfo.time}
-                                                onChange={(e) => updateWorkingHour(i, 'time', e.target.value)}
-                                                disabled={!dayInfo.isOpen}
-                                                placeholder="e.g. 9:00 AM - 6:00 PM"
-                                            />
-                                            <button
-                                                onClick={() => applyToWeekdays(dayInfo.time, dayInfo.isOpen)}
-                                                className="p-2 text-gray-400 hover:text-accent transition-colors bg-white/5 rounded-lg hover:bg-white/10"
-                                                title="Apply this time to all weekdays (Mon-Fri)"
-                                            >
-                                                <Copy size={16} />
-                                            </button>
-                                        </div>
+
+                                    {/* Time Input Row */}
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            className={`flex-1 bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-white text-base focus:border-accent focus:outline-none transition-opacity ${!dayInfo.isOpen && 'opacity-50 cursor-not-allowed'}`}
+                                            value={dayInfo.time}
+                                            onChange={(e) => updateWorkingHour(i, 'time', e.target.value)}
+                                            disabled={!dayInfo.isOpen}
+                                            placeholder="e.g. 9:00 AM - 6:00 PM"
+                                        />
+                                        <button
+                                            onClick={() => applyToWeekdays(dayInfo.time, dayInfo.isOpen)}
+                                            className="p-3 text-gray-400 hover:text-accent transition-colors bg-white/5 rounded-lg hover:bg-white/10 flex-shrink-0"
+                                            title="Apply this time to all weekdays (Mon-Fri)"
+                                        >
+                                            <Copy size={18} />
+                                        </button>
                                     </div>
                                 </div>
                             ))}
