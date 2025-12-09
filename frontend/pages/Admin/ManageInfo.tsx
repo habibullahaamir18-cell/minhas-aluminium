@@ -98,10 +98,69 @@ const ManageInfo: React.FC = () => {
         setTimeout(() => setMessage(''), 3000);
     };
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: string, nestedField?: string) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            const res = await axios.post(getApiUrl('api/upload'), formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            if (nestedField) {
+                // @ts-ignore
+                setInfo(prev => ({
+                    ...prev,
+                    // @ts-ignore
+                    [field]: { ...prev[field], [nestedField]: res.data.filePath }
+                }));
+            } else {
+                // @ts-ignore
+                setInfo(prev => ({ ...prev, [field]: res.data.filePath }));
+            }
+            setMessage('Image uploaded successfully!');
+        } catch (err) {
+            console.error('Upload failed', err);
+            setMessage('Failed to upload image.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const updateAbout = (field: string, value: any) => {
+        setInfo({ ...info, about: { ...info.about, [field]: value } });
+    };
+
+    const updateAboutArray = (arrayName: 'values' | 'timeline', index: number, field: string, value: any) => {
+        const newArray = [...(info.about[arrayName] || [])];
+        newArray[index] = { ...newArray[index], [field]: value };
+        setInfo({ ...info, about: { ...info.about, [arrayName]: newArray } });
+    };
+
+    const addToAboutArray = (arrayName: 'values' | 'timeline') => {
+        const item = arrayName === 'values' ? { icon: 'award', label: 'New Value' } : { year: '2024', title: 'New Event', description: 'Description' };
+        setInfo({ ...info, about: { ...info.about, [arrayName]: [...(info.about[arrayName] || []), item] } });
+    };
+
+    const removeFromAboutArray = (arrayName: 'values' | 'timeline', index: number) => {
+        const newArray = [...(info.about[arrayName] || [])];
+        newArray.splice(index, 1);
+        setInfo({ ...info, about: { ...info.about, [arrayName]: newArray } });
+    };
+
     const tabs = [
         { id: 'stats', label: 'Statistics', icon: Award },
         { id: 'contact', label: 'Contact Details', icon: Phone },
         { id: 'hours', label: 'Working Hours', icon: Clock },
+        { id: 'about', label: 'About Data', icon: User },
     ];
 
     return (
@@ -350,6 +409,182 @@ const ManageInfo: React.FC = () => {
                                     </div>
                                 </div>
                             ))}
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'about' && (
+                        <motion.div
+                            key="about"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            className="space-y-8"
+                        >
+                            {/* CEO Section */}
+                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                                <h3 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-2">CEO & Basics</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-400">CEO Name</label>
+                                        <input
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            value={info.about?.ceoName || ''}
+                                            onChange={(e) => updateAbout('ceoName', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-400">Years Experience</label>
+                                        <input
+                                            type="number"
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            value={info.about?.yearsExperience || 0}
+                                            onChange={(e) => updateAbout('yearsExperience', parseInt(e.target.value))}
+                                        />
+                                    </div>
+                                    <div className="space-y-2 md:col-span-2">
+                                        <label className="text-sm font-medium text-gray-400">CEO Image</label>
+                                        <div className="flex items-center gap-4">
+                                            {info.about?.ceoImage && (
+                                                <img src={info.about.ceoImage} alt="CEO" className="w-16 h-16 rounded-full object-cover border border-white/10" />
+                                            )}
+                                            <label className="cursor-pointer bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                                <Upload size={16} /> Upload Image
+                                                <input type="file" className="hidden" onChange={(e) => handleImageUpload(e, 'about', 'ceoImage')} accept="image/*" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Story Section */}
+                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                                <h3 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-2">Our Story</h3>
+                                <div className="space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium text-gray-400">Title</label>
+                                            <input
+                                                className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                                value={info.about?.storyTitle || ''}
+                                                onChange={(e) => updateAbout('storyTitle', e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium text-gray-400">Subtitle</label>
+                                            <input
+                                                className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                                value={info.about?.storySubtitle || ''}
+                                                onChange={(e) => updateAbout('storySubtitle', e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-400">Main Story Image</label>
+                                        <div className="flex items-center gap-4">
+                                            {info.about?.storyImage && (
+                                                <img src={info.about.storyImage} alt="Story" className="w-24 h-16 rounded object-cover border border-white/10" />
+                                            )}
+                                            <label className="cursor-pointer bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                                <Upload size={16} /> Upload Image
+                                                <input type="file" className="hidden" onChange={(e) => handleImageUpload(e, 'about', 'storyImage')} accept="image/*" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-400">Paragraph 1</label>
+                                        <textarea
+                                            rows={3}
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            value={info.about?.storyParagraph1 || ''}
+                                            onChange={(e) => updateAbout('storyParagraph1', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-400">Paragraph 2</label>
+                                        <textarea
+                                            rows={3}
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            value={info.about?.storyParagraph2 || ''}
+                                            onChange={(e) => updateAbout('storyParagraph2', e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Values Section */}
+                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                    <h3 className="text-xl font-bold text-white">Core Values</h3>
+                                    <button onClick={() => addToAboutArray('values')} className="text-accent text-sm hover:underline flex items-center gap-1"><Check size={14} /> Add Value</button>
+                                </div>
+                                <div className="space-y-4">
+                                    {info.about?.values?.map((val: any, i: number) => (
+                                        <div key={i} className="flex gap-4 items-center bg-secondary/50 p-3 rounded-lg">
+                                            <div className="w-1/3">
+                                                <label className="block text-xs text-gray-500 mb-1">Icon (lucide)</label>
+                                                <input
+                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                    value={val.icon || ''}
+                                                    onChange={(e) => updateAboutArray('values', i, 'icon', e.target.value)}
+                                                    placeholder="award, users..."
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <label className="block text-xs text-gray-500 mb-1">Label</label>
+                                                <input
+                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                    value={val.label || ''}
+                                                    onChange={(e) => updateAboutArray('values', i, 'label', e.target.value)}
+                                                />
+                                            </div>
+                                            <button onClick={() => removeFromAboutArray('values', i)} className="text-red-400 hover:text-red-300 p-2"><XIcon size={16} /></button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Timeline Section */}
+                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                    <h3 className="text-xl font-bold text-white">Timeline</h3>
+                                    <button onClick={() => addToAboutArray('timeline')} className="text-accent text-sm hover:underline flex items-center gap-1"><Check size={14} /> Add Event</button>
+                                </div>
+                                <div className="space-y-4">
+                                    {info.about?.timeline?.map((item: any, i: number) => (
+                                        <div key={i} className="bg-secondary/50 p-4 rounded-lg space-y-3 relative group">
+                                            <button onClick={() => removeFromAboutArray('timeline', i)} className="absolute top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"><XIcon size={16} /></button>
+                                            <div className="grid grid-cols-4 gap-4">
+                                                <div className="col-span-1">
+                                                    <label className="block text-xs text-gray-500 mb-1">Year</label>
+                                                    <input
+                                                        className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                        value={item.year || ''}
+                                                        onChange={(e) => updateAboutArray('timeline', i, 'year', e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-span-3">
+                                                    <label className="block text-xs text-gray-500 mb-1">Title</label>
+                                                    <input
+                                                        className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                        value={item.title || ''}
+                                                        onChange={(e) => updateAboutArray('timeline', i, 'title', e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-gray-500 mb-1">Description</label>
+                                                <textarea
+                                                    rows={2}
+                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                    value={item.description || ''}
+                                                    onChange={(e) => updateAboutArray('timeline', i, 'description', e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
                         </motion.div>
                     )}
 

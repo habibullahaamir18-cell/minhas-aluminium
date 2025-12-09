@@ -145,7 +145,7 @@ const ManageAbout: React.FC = () => {
         }
 
         try {
-            await axios.put(getApiUrl('api/info'),
+            await axios.post(getApiUrl('api/info'),
                 { about: aboutData },
                 { headers: { 'Authorization': `Bearer ${token}` } }
             );
