@@ -266,7 +266,7 @@ const Home: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.slice(0, 2).map((project, idx) => (
                 <Reveal key={project._id || idx} delay={idx * 0.2}>
-                  <div className="group relative overflow-hidden rounded-xl aspect-[4/3] cursor-pointer">
+                  <Link to="/projects" className="group relative overflow-hidden rounded-xl aspect-[4/3] cursor-pointer block">
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-10"></div>
                     <img
                       src={project.images[0]}
@@ -278,7 +278,7 @@ const Home: React.FC = () => {
                       <h3 className="text-2xl font-bold text-white">{project.title}</h3>
                       <p className="text-gray-300 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">{project.location}</p>
                     </div>
-                  </div>
+                  </Link>
                 </Reveal>
               ))}
             </div>
@@ -338,18 +338,20 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <Reveal>
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">Ready to Transform Your Space?</h2>
-            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-              Let's discuss your project requirements and bring your vision to life with our premium aluminium and glass solutions.
-            </p>
-            <a
-              href={`https://wa.me/${info.contact?.whatsapp?.replace(/\D/g, '')}?text=Hi, I would like to request a quotation for...`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-10 py-5 bg-accent text-dark font-bold text-lg rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-xl shadow-accent/20 inline-block"
-            >
-              Get a Free Quote
-            </a>
+            <div className="flex flex-col items-center justify-center text-center">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8 text-center w-full">Ready to Transform Your Space?</h2>
+              <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto text-center">
+                Let's discuss your project requirements and bring your vision to life with our premium aluminium and glass solutions.
+              </p>
+              <a
+                href={`https://wa.me/${info.contact?.whatsapp?.replace(/\D/g, '')}?text=Hi, I would like to request a quotation for...`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-10 py-5 bg-accent text-dark font-bold text-lg rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-xl shadow-accent/20 inline-block"
+              >
+                Get a Free Quote
+              </a>
+            </div>
           </Reveal>
         </div></section >
 

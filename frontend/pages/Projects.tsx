@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getImageUrl } from '../src/config/api';
 import { Project } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ZoomIn, Layers } from 'lucide-react';
@@ -77,7 +78,7 @@ const Projects: React.FC = () => {
                 onClick={() => setSelectedProject(project)}
               >
                 <img
-                  src={project.images[0]}
+                  src={getImageUrl(project.images[0])}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
 import { getIcon } from '../components/ui/IconHelper';
 import { ServiceModal } from '../components/ui/ServiceModal';
-import { getApiUrl } from '../src/config/api';
+import { getApiUrl, getImageUrl } from '../src/config/api';
 
 const Services: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
