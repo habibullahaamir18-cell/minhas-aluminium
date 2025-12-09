@@ -423,7 +423,7 @@ const ManageInfo: React.FC = () => {
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-gray-400">CEO Name</label>
                                         <input
-                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white text-base sm:text-sm focus:border-accent focus:outline-none"
                                             value={info.about?.ceoName || ''}
                                             onChange={(e) => updateAbout('ceoName', e.target.value)}
                                         />
@@ -432,7 +432,7 @@ const ManageInfo: React.FC = () => {
                                         <label className="text-sm font-medium text-gray-400">Years Experience</label>
                                         <input
                                             type="number"
-                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white text-base sm:text-sm focus:border-accent focus:outline-none"
                                             value={info.about?.yearsExperience || 0}
                                             onChange={(e) => updateAbout('yearsExperience', parseInt(e.target.value))}
                                         />
@@ -460,7 +460,7 @@ const ManageInfo: React.FC = () => {
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-gray-400">Title</label>
                                             <input
-                                                className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                                className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white text-base sm:text-sm focus:border-accent focus:outline-none"
                                                 value={info.about?.storyTitle || ''}
                                                 onChange={(e) => updateAbout('storyTitle', e.target.value)}
                                             />
@@ -468,7 +468,7 @@ const ManageInfo: React.FC = () => {
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-gray-400">Subtitle</label>
                                             <input
-                                                className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                                className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white text-base sm:text-sm focus:border-accent focus:outline-none"
                                                 value={info.about?.storySubtitle || ''}
                                                 onChange={(e) => updateAbout('storySubtitle', e.target.value)}
                                             />
@@ -490,7 +490,7 @@ const ManageInfo: React.FC = () => {
                                         <label className="text-sm font-medium text-gray-400">Paragraph 1</label>
                                         <textarea
                                             rows={3}
-                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white text-base sm:text-sm focus:border-accent focus:outline-none"
                                             value={info.about?.storyParagraph1 || ''}
                                             onChange={(e) => updateAbout('storyParagraph1', e.target.value)}
                                         />
@@ -499,7 +499,7 @@ const ManageInfo: React.FC = () => {
                                         <label className="text-sm font-medium text-gray-400">Paragraph 2</label>
                                         <textarea
                                             rows={3}
-                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
+                                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-2 text-white text-base sm:text-sm focus:border-accent focus:outline-none"
                                             value={info.about?.storyParagraph2 || ''}
                                             onChange={(e) => updateAbout('storyParagraph2', e.target.value)}
                                         />
