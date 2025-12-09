@@ -336,10 +336,10 @@ const Home: React.FC = () => {
       {/* CTA Section */}
       < section className="py-20 bg-primary relative overflow-hidden" >
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <Reveal>
-            <div className="flex flex-col items-center justify-center text-center">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8 text-center w-full">Ready to Transform Your Space?</h2>
+        <div className="container mx-auto px-6 relative z-10 font-sans flex flex-col items-center text-center">
+          <Reveal width="100%" className="w-full flex flex-col items-center justify-center mx-auto">
+            <div className="max-w-4xl mx-auto w-full flex flex-col items-center justify-center text-center">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8 text-center w-full mx-auto">Ready to Transform Your Space?</h2>
               <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto text-center">
                 Let's discuss your project requirements and bring your vision to life with our premium aluminium and glass solutions.
               </p>
