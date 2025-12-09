@@ -213,7 +213,7 @@ const ManageInfo: React.FC = () => {
             </div>
 
             {/* Content */}
-            <div className="bg-secondary p-8 rounded-b-xl rounded-tr-xl border border-white/5 min-h-[400px]">
+            <div className="bg-secondary p-4 md:p-8 rounded-b-xl rounded-tr-xl border border-white/5 min-h-[400px]">
                 <AnimatePresence mode="wait">
                     {activeTab === 'stats' && (
                         <motion.div
@@ -224,7 +224,7 @@ const ManageInfo: React.FC = () => {
                             className="grid grid-cols-1 md:grid-cols-2 gap-6"
                         >
                             {info.stats?.map((stat: any, i: number) => (
-                                <div key={i} className="bg-dark p-6 rounded-xl border border-white/5 hover:border-accent/30 transition-colors">
+                                <div key={i} className="bg-dark p-4 md:p-6 rounded-xl border border-white/5 hover:border-accent/30 transition-colors">
                                     <div className="flex items-center gap-3 mb-4 text-accent">
                                         <Award size={20} />
                                         <span className="font-bold">Stat #{i + 1}</span>
@@ -434,7 +434,7 @@ const ManageInfo: React.FC = () => {
                             className="space-y-8"
                         >
                             {/* CEO Section */}
-                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                            <div className="bg-dark p-4 md:p-6 rounded-xl border border-white/5">
                                 <h3 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-2">CEO & Basics</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
@@ -470,7 +470,7 @@ const ManageInfo: React.FC = () => {
                             </div>
 
                             {/* Story Section */}
-                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                            <div className="bg-dark p-4 md:p-6 rounded-xl border border-white/5">
                                 <h3 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-2">Our Story</h3>
                                 <div className="space-y-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -525,7 +525,7 @@ const ManageInfo: React.FC = () => {
                             </div>
 
                             {/* Values Section */}
-                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                            <div className="bg-dark p-4 md:p-6 rounded-xl border border-white/5">
                                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
                                     <h3 className="text-xl font-bold text-white">Core Values</h3>
                                     <button onClick={() => addToAboutArray('values')} className="text-accent text-sm hover:underline flex items-center gap-1"><Check size={14} /> Add Value</button>
@@ -557,7 +557,7 @@ const ManageInfo: React.FC = () => {
                             </div>
 
                             {/* Timeline Section */}
-                            <div className="bg-dark p-6 rounded-xl border border-white/5">
+                            <div className="bg-dark p-4 md:p-6 rounded-xl border border-white/5">
                                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
                                     <h3 className="text-xl font-bold text-white">Timeline</h3>
                                     <button onClick={() => addToAboutArray('timeline')} className="text-accent text-sm hover:underline flex items-center gap-1"><Check size={14} /> Add Event</button>

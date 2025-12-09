@@ -242,7 +242,7 @@ const ManageServices: React.FC = () => {
                                 </button>
                             </div>
 
-                            <div className="p-8 overflow-y-auto custom-scrollbar">
+                            <div className="p-4 md:p-8 overflow-y-auto custom-scrollbar">
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
@@ -325,7 +325,7 @@ const ManageServices: React.FC = () => {
 
                                     <div className="space-y-4">
                                         <label className="text-sm font-medium text-gray-400">Service Images</label>
-                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                                             {currentService.images?.map((img, i) => (
                                                 <div key={i} className="relative group aspect-square rounded-lg overflow-hidden border border-gray-700">
                                                     <img src={img} alt="Preview" className="w-full h-full object-cover" />
