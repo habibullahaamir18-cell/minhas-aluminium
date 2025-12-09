@@ -165,14 +165,14 @@ const ManageInfo: React.FC = () => {
 
     return (
         <div className="space-y-8">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-display font-bold text-white mb-2">Business Information</h1>
-                    <p className="text-gray-400">Manage your company details and vital statistics.</p>
+                    <h1 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">Business Information</h1>
+                    <p className="text-gray-400 text-sm sm:text-base">Manage your company details and vital statistics.</p>
                 </div>
                 <button
                     onClick={handleSave}
-                    className="bg-accent text-dark px-6 py-3 rounded-lg font-bold hover:bg-white transition-all duration-300 flex items-center gap-2 shadow-lg shadow-accent/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto bg-accent text-dark px-6 py-3 rounded-lg font-bold hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-accent/20 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={loading}
                 >
                     <Save size={20} /> {loading ? 'Saving...' : 'Save Changes'}
@@ -190,18 +190,18 @@ const ManageInfo: React.FC = () => {
             )}
 
             {/* Tabs */}
-            <div className="flex gap-4 border-b border-white/5 pb-1 overflow-x-auto">
+            <div className="flex gap-2 sm:gap-4 border-b border-white/5 pb-1 overflow-x-auto scrollbar-hide">
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-t-lg transition-all relative whitespace-nowrap ${activeTab === tab.id
+                        className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-t-lg transition-all relative whitespace-nowrap flex-shrink-0 ${activeTab === tab.id
                             ? 'text-accent bg-white/5'
                             : 'text-gray-400 hover:text-white hover:bg-white/5'
                             }`}
                     >
                         <tab.icon size={18} />
-                        <span className="font-medium">{tab.label}</span>
+                        <span className="font-medium text-sm sm:text-base">{tab.label}</span>
                         {activeTab === tab.id && (
                             <motion.div
                                 layoutId="activeTab"
@@ -221,7 +221,7 @@ const ManageInfo: React.FC = () => {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
-                            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
                         >
                             {info.stats?.map((stat: any, i: number) => (
                                 <div key={i} className="bg-dark p-4 md:p-6 rounded-xl border border-white/5 hover:border-accent/30 transition-colors">
@@ -269,7 +269,7 @@ const ManageInfo: React.FC = () => {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
-                            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8"
                         >
                             <div className="space-y-2">
                                 <label className="flex items-center gap-2 text-sm font-medium text-gray-400">
@@ -436,7 +436,7 @@ const ManageInfo: React.FC = () => {
                             {/* CEO Section */}
                             <div className="bg-dark p-4 md:p-6 rounded-xl border border-white/5">
                                 <h3 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-2">CEO & Basics</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-gray-400">CEO Name</label>
                                         <input
@@ -536,7 +536,7 @@ const ManageInfo: React.FC = () => {
                                             <div className="w-full sm:w-1/3">
                                                 <label className="block text-xs text-gray-500 mb-1">Icon (lucide)</label>
                                                 <input
-                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-base sm:text-sm"
                                                     value={val.icon || ''}
                                                     onChange={(e) => updateAboutArray('values', i, 'icon', e.target.value)}
                                                     placeholder="award, users..."
@@ -545,7 +545,7 @@ const ManageInfo: React.FC = () => {
                                             <div className="w-full sm:flex-1">
                                                 <label className="block text-xs text-gray-500 mb-1">Label</label>
                                                 <input
-                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-base sm:text-sm"
                                                     value={val.label || ''}
                                                     onChange={(e) => updateAboutArray('values', i, 'label', e.target.value)}
                                                 />
@@ -570,7 +570,7 @@ const ManageInfo: React.FC = () => {
                                                 <div className="w-full sm:col-span-1">
                                                     <label className="block text-xs text-gray-500 mb-1">Year</label>
                                                     <input
-                                                        className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                        className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-base sm:text-sm"
                                                         value={item.year || ''}
                                                         onChange={(e) => updateAboutArray('timeline', i, 'year', e.target.value)}
                                                     />
@@ -578,7 +578,7 @@ const ManageInfo: React.FC = () => {
                                                 <div className="w-full sm:col-span-3">
                                                     <label className="block text-xs text-gray-500 mb-1">Title</label>
                                                     <input
-                                                        className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                        className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-base sm:text-sm"
                                                         value={item.title || ''}
                                                         onChange={(e) => updateAboutArray('timeline', i, 'title', e.target.value)}
                                                     />
@@ -588,7 +588,7 @@ const ManageInfo: React.FC = () => {
                                                 <label className="block text-xs text-gray-500 mb-1">Description</label>
                                                 <textarea
                                                     rows={2}
-                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-sm"
+                                                    className="w-full bg-secondary border border-gray-700 rounded px-3 py-2 text-white text-base sm:text-sm"
                                                     value={item.description || ''}
                                                     onChange={(e) => updateAboutArray('timeline', i, 'description', e.target.value)}
                                                 />
