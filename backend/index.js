@@ -93,7 +93,12 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/clients', clientRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Minhas Aluminium & Glass API is running');
+    const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+    res.json({
+        message: 'Minhas Aluminium & Glass API is running',
+        dbStatus,
+        env: process.env.NODE_ENV
+    });
 });
 
 app.listen(PORT, () => {
