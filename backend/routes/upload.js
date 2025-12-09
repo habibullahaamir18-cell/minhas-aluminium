@@ -30,7 +30,7 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
             (error, result) => {
                 if (error) {
                     console.error('Cloudinary upload error:', error);
-                    return res.status(500).json({ error: 'Failed to upload image' });
+                    return res.status(500).json({ error: 'Failed to upload image', details: error.message });
                 }
 
                 // Return the Cloudinary URL
